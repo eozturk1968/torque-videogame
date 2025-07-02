@@ -1,0 +1,17 @@
+#include <emscripten/bind.h>
+using namespace emscripten;
+
+// Compute torque = force × radius
+float computeTorque(float force, float radius) {
+    return force * radius;
+}
+
+// Check if two torques balance (within a small epsilon)
+bool isBalanced(float leftTorque, float rightTorque, float epsilon = 0.01f) {
+    return fabs(leftTorque - rightTorque) < epsilon;
+}
+
+EMSCRIPTEN_BINDINGS(physics) {
+    function("computeTorque", &computeTorque);
+    function("isBalanced", &isBalanced);
+}
