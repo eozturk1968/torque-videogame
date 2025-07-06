@@ -1,37 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Torque Balance Game</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Torque Balance Game</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Torque Balance Game</h1>
+  <h1>Torque Balance Game</h1>
 
-    <!-- Canvas where the seesaw will be drawn -->
-    <canvas id="gameCanvas" width="800" height="400"></canvas>
+  <!-- Canvas where the seesaw will be drawn -->
+  <canvas id="gameCanvas" width="800" height="400"></canvas>
 
-    <!-- Control panel for adding weights and resetting -->
-    <div id="info">
-        <!-- Force input (non-negative) -->
-        Force: <input id="force" type="number" value="10" min="0"> N
+  <!-- Control panel for adding weights and resetting -->
+  <div id="info">
+    <!-- Force input (non-negative) -->
+    Force: <input id="force" type="number" value="10" min="0"> N
 
-        <!-- Discrete radius slider from -5 to +5 -->
-        Distance:
-        <input id="radius"
-               type="range"
-               min="-5"
-               max="5"
-               step="1"
-               value="1">
-        <span id="radiusVal">1</span> m
+    <!-- Discrete radius slider from -5 to +5 -->
+    Distance:
+    <input
+      id="radius"
+      type="range"
+      min="-5"
+      max="5"
+      step="1"
+      value="1"
+    >
+    <span id="radiusVal">1</span> m
 
-        <button id="addWeight">Add Weight</button>
-        <button id="resetGame">Reset</button>
+    <button id="addWeight">Add Weight</button>
+    <button id="resetGame">Reset</button>
 
-        <p id="status"></p>
-    </div>
+    <p id="status"></p>
+  </div>
 
-    <script src="main.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
