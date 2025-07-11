@@ -29,7 +29,9 @@ const levelSeeds = [
     [ // Level 2
         { img: cherryImg, F: 10, r: -1 },
         { img: pearImg, F: 25, r: -4 },
-        { img: appleImg, F: 20, r: 5 }
+        { img: appleImg, F: 20, r: 5 },
+        { img: bananaImg, F: 15, r: 3 }
+        
     ],
     [ // Level 3
         { img: cherryImg, F: 10, r: -3 },
