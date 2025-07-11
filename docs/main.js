@@ -1,18 +1,13 @@
-// public/main.js
-// EF-151 project group 6
-// --- Physics helper functions ---
-function computeTorque(force, radius) {
-    return force * radius;
-}
-function isBalanced(leftT, rightT, eps = 0.01) {
-    return Math.abs(leftT - rightT) < eps;
-}
+// --- Physics helpers ---
+function computeTorque(F, r) { return F * r; }
+function isBalanced(L, R, eps = 0.01) { return Math.abs(L - R) < eps; }
 
-// --- Preload park background ---
-const bgImg = new Image();
-bgImg.src = 'images/park-bg.png';
+// --- Preload images ---
+const bgImg = new Image(); bgImg.src = 'images/park-bg.png';
+const bananaImg = new Image(); bananaImg.src = 'images/banana.png';
+const appleImg = new Image(); appleImg.src = 'images/apple.png';
 
-// --- Grab DOM elements ---
+// --- DOM refs ---
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const forceIn = document.getElementById('force');
@@ -22,42 +17,54 @@ const addBtn = document.getElementById('addWeight');
 const resetBtn = document.getElementById('resetGame');
 const statusP = document.getElementById('status');
 
-let weights = [];
+let weights = [];  // each: {F, r, img}
 
-// --- Initialization ---
+// --- Initialize once background is ready ---
+bgImg.onload = () => initGame();
+
 function initGame() {
-    radiusIn.oninput = () => { radiusVal.textContent = radiusIn.value; };
-    addBtn.onclick = handleAdd;
-    resetBtn.onclick = handleReset;
+    // slider label sync
+    radiusVal.textContent = radiusIn.value;
+    radiusIn.oninput = () => radiusVal.textContent = radiusIn.value;
+
+    // Add manual weights (no icon)
+    addBtn.onclick = () => {
+        const F = Math.max(0, parseFloat(forceIn.value) || 0);
+        const r = parseFloat(radiusIn.value) || 0;
+        weights.push({ F, r, img: null });
+        update();
+    };
+
+    // Reset → restart level 1
+    resetBtn.onclick = () => {
+        startLevel1();
+        update();
+    };
+
+    // Start
+    startLevel1();
     draw();
 }
-window.onload = initGame;
 
-function handleAdd() {
-    let F = parseFloat(forceIn.value) || 0;
-    F = Math.max(0, F);
-    const r = parseFloat(radiusIn.value) || 0;
-    weights.push({ F, r });
-    update();
-}
-
-function handleReset() {
-    weights = [];
+// --- Seed Level 1 with banana & apple ---
+function startLevel1() {
+    weights = [
+        { F: 15, r: 2, img: bananaImg },
+        { F: 20, r: 4, img: appleImg }
+    ];
     statusP.textContent = '';
-    forceIn.value = 10;
-    radiusIn.value = 1;
+    forceIn.value = "";
+    radiusIn.value = "";
     radiusVal.textContent = '1';
-    draw();
 }
 
 // --- Draw loop ---
 function draw() {
-    // 1) Clear canvas
+    // clear
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // 2) Draw full-canvas background
+    // 1) background stretched
     if (bgImg.complete) {
-        // source: full image, dest: full canvas
         ctx.drawImage(
             bgImg,
             0, 0, bgImg.width, bgImg.height,
@@ -65,41 +72,58 @@ function draw() {
         );
     }
 
-    // 3) Draw your rotating plank & ticks only
+    // 2) center & tilt
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
 
-    // compute tilt
-    const net = weights.reduce(
-        (sum, w) => sum + computeTorque(w.F, Math.abs(w.r)) * Math.sign(w.r),
-        0
-    );
+    const net = weights.reduce((sum, w) => sum + computeTorque(w.F, w.r), 0);
     ctx.rotate(net * 0.001);
 
-    // horizontal plank
+    // 3) plank
     ctx.fillStyle = '#888';
     ctx.fillRect(-300, -10, 600, 20);
 
-    // tick marks ±1…±5
+    // 4) draw each fruit icon
+    weights.forEach(w => {
+        if (w.img) {
+            const x = w.r * (300 / 5); // maxDistance = 5
+            const size = 60;
+            ctx.drawImage(w.img, x - size / 2, -10 - size, size, size);
+        }
+    });
+
+    // 5) tick marks
     ctx.strokeStyle = '#000';
     ctx.lineWidth = 2;
     for (let i = 1; i <= 5; i++) {
-        const x = i * 60;  // 300px half-length ÷ 5
+        const x = i * (300 / 5);
         ctx.beginPath();
-        ctx.moveTo(x, -15); ctx.lineTo(x, +15); ctx.stroke();
+        ctx.moveTo(x, -15); ctx.lineTo(x, +15);
+        ctx.stroke();
         ctx.beginPath();
-        ctx.moveTo(-x, -15); ctx.lineTo(-x, +15); ctx.stroke();
+        ctx.moveTo(-x, -15); ctx.lineTo(-x, +15);
+        ctx.stroke();
     }
 
     ctx.restore();
 }
 
-// --- Update & status text ---
+// --- After adding weight or reset: update status & redraw ---
 function update() {
     draw();
-    const leftT = weights.filter(w => w.r < 0).reduce((s, w) => s + computeTorque(w.F, -w.r), 0);
-    const rightT = weights.filter(w => w.r > 0).reduce((s, w) => s + computeTorque(w.F, w.r), 0);
-    statusP.textContent = isBalanced(leftT, rightT)
-        ? 'Balanced! 🎉'
-        : `Left: ${leftT.toFixed(1)} Nm, Right: ${rightT.toFixed(1)} Nm`;
+
+    const leftT = weights
+        .filter(w => w.r < 0)
+        .reduce((s, w) => s + computeTorque(w.F, -w.r), 0);
+
+    const rightT = weights
+        .filter(w => w.r > 0)
+        .reduce((s, w) => s + computeTorque(w.F, w.r), 0);
+
+    if (isBalanced(leftT, rightT)) {
+        statusP.textContent = 'Balanced! 🎉';
+    } else {
+        statusP.textContent =
+            `Left: ${leftT.toFixed(1)} Nm, Right: ${rightT.toFixed(1)} Nm`;
+    }
 }

@@ -1,20 +1,56 @@
-/* public/style.css */
-
-/* Use a clean, sans-serif font and center everything */
 body {
-  font-family: sans-serif;
-  text-align: center;
-  margin: 0;
-  padding: 1em;
+    font-family: sans-serif;
+    margin: 20px;
+    text-align: center;
 }
 
-/* Add a border around the canvas and some spacing */
-canvas {
-  border: 1px solid #333;
-  margin-top: 1em;
+/* Make a horizontal flex container */
+.game-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px; /* space between canvas and sidebar */
 }
 
-/* Space the control panel from the canvas */
-#info {
-  margin-top: 1em;
+/* Wrap canvas and its controls vertically */
+.game-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Sidebar styling */
+.sidebar {
+    width: 200px;
+    text-align: left;
+}
+
+    .sidebar h2 {
+        margin-top: 0;
+        font-size: 1.2em;
+    }
+
+/* Each fruit row */
+.fruit-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+    .fruit-item img {
+        width: 48px;
+        height: 48px;
+        object-fit: contain;
+        margin-right: 10px;
+    }
+
+/* Canvas styling unchanged */
+#gameCanvas {
+    border: 1px solid #aaa;
+    background: #fff;
+}
+
+/* Controls under canvas */
+#controls {
+    margin-top: 10px;
 }
