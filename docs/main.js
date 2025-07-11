@@ -97,7 +97,7 @@ function checkAfterAdd() {
         .reduce((s, w) => s + computeTorque(w.F, w.r), 0);
 
     if (isBalanced(leftT, rightT)) {
-        statusP.textContent = 'Balanced! Moving to next level…';
+        statusP.textContent = 'Congratulations!!!';
        setTimeout(nextLevel, 0);
     } else if (!attempted) {
         attempted = true;
