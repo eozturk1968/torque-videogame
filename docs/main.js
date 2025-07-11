@@ -36,7 +36,7 @@ const levelSeeds = [
     [ // Level 3
         { img: cherryImg, F: 10, r: -3 },
         { img: pearImg, F: 25, r: 4 },
-        { img: appleImg, F: 20, r: -2 },
+        { img: appleImg, F: 20, r: -5 },
         { img: bananaImg, F: 15, r: 3 }
     ]
 ];
