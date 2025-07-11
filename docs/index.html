@@ -7,15 +7,16 @@
 </head>
 <body>
     <h1>Torque Balance Game</h1>
+    <h2 id="level-title"></h2>
 
-    <!-- NEW: flex row that holds canvas+controls and the sidebar -->
     <div class="game-row">
-        <!-- the existing game area -->
         <div class="game-area">
             <canvas id="gameCanvas" width="800" height="400"></canvas>
             <div id="controls">
-                Force: <input id="force" type="number" value="10" min="0"> N
-                Distance: <input id="radius" type="range" min="-5" max="5" step="1" value="1">
+                Force:
+                <input id="force" type="number" value="10" min="0"> N
+                Distance:
+                <input id="radius" type="range" min="-5" max="5" step="1" value="1">
                 <span id="radiusVal">1</span> m
                 <button id="addWeight">Add Weight</button>
                 <button id="resetGame">Reset</button>
@@ -23,29 +24,14 @@
             </div>
         </div>
 
-    
-            <!-- Sidebar showing the fruit legend -->
-            <div class="sidebar">
-                <h2>Fruit Weights</h2>
-                <div class="fruit-item">
-                    <img src="images/apple.png" alt="Apple">
-                    <span>Apple: 20 N</span>
-                </div>
-                <div class="fruit-item">
-                    <img src="images/banana.png" alt="Banana">
-                    <span>Banana: 15 N</span>
-                </div>
-                <div class="fruit-item">
-                    <img src="images/cherry.png" alt="Cherry">
-                    <span>Cherry: 10 N</span>
-                </div>
-                <!-- NEW: pear entry -->
-                <div class="fruit-item">
-                    <img src="images/pear.png" alt="Pear">
-                    <span>Pear: 25 N</span>
-                </div>
-            </div>
-
+        <div class="sidebar">
+            <h2>Fruit Weights</h2>
+            <ul class="fruit-list">
+                <li><img src="images/banana.png" alt="Banana"><strong>Banana:</strong> 15 N</li>
+                <li><img src="images/apple.png" alt="Apple"><strong>Apple:</strong> 20 N</li>
+                <li><img src="images/cherry.png" alt="Cherry"><strong>Cherry:</strong> 10 N</li>
+                <li><img src="images/pear.png" alt="Pear"><strong>Pear:</strong> 25 N</li>
+            </ul>
         </div>
     </div>
 
