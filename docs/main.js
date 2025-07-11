@@ -77,8 +77,8 @@ function nextLevel() {
 
     // UI reset
     levelTitle.textContent = `Level ${currentLevel}`;
-    forceIn.value = "";
-    radiusIn.value = 0;
+    forceIn.value = 10;
+    radiusIn.value = 1;
     radiusVal.textContent = '1';
     statusP.textContent = '';
 
