@@ -1,5 +1,5 @@
 // public/main.js
-// EF-151 project
+// EF-151 project group 6
 // --- Physics helper functions ---
 function computeTorque(force, radius) {
     return force * radius;
