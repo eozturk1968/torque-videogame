@@ -82,7 +82,7 @@ function nextLevel() {
         // Level 1: distance fixed to -1
         forceIn.disabled = false;
         radiusIn.disabled = true;
-        forceIn.value = 10;        // or any default
+        forceIn.value = "";        // or any default
         radiusIn.value = -1;
         radiusVal.textContent = '-1';
     } else if (lvlIndex === 1) {
@@ -96,7 +96,7 @@ function nextLevel() {
         // Level 3+: all free again
         forceIn.disabled = false;
         radiusIn.disabled = true;
-        forceIn.value = 10;
+        forceIn.value = "";
         radiusIn.value = -5;
         radiusVal.textContent = '-5';
     }
