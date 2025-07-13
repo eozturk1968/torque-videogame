@@ -46,46 +46,75 @@ let weights = [];
 let attempted = false;  // have they tried (and failed) once this level?
 
 // --- Bootstrapping ---
+// … keep all your preload, helpers, and DOM refs …
+
 window.onload = () => {
-    // Sync slider label
+    // sync slider label
     radiusVal.textContent = radiusIn.value;
     radiusIn.oninput = () => radiusVal.textContent = radiusIn.value;
 
-    // Add weight and automatically check
-    addBtn.onclick = () => {
-        const F = Math.max(0, parseFloat(forceIn.value) || 0);
-        const r = parseFloat(radiusIn.value) || 0;
-        weights.push({ img: null, F, r });
-        checkAfterAdd();
-    };
-
-    // Reset current level
-    resetBtn.onclick = () => restartLevel('');
+    addBtn.onclick = () => { addManualWeightAndCheck(); };
+    resetBtn.onclick = () => { restartLevel(''); };
 
     nextLevel();
 };
 
-// --- Seed & draw the next level ---
 function nextLevel() {
     if (currentLevel >= levelSeeds.length) {
-        alert('🎉 You’ve beaten all levels! 🎉');
+        alert('You’ve beaten all levels!');
         return;
     }
 
-    // Seed this level
-    weights = levelSeeds[currentLevel].map(s => ({ ...s }));
+    const lvlIndex = currentLevel;
+    const seeds = levelSeeds[lvlIndex];
+    weights = seeds.map(s => ({ ...s }));
     currentLevel++;
     attempted = false;
 
-    // UI reset
-    levelTitle.textContent = `Level ${currentLevel}`;
-    forceIn.value = 10;
-    radiusIn.value = 1;
-    radiusVal.textContent = '1';
+    // Reset status
     statusP.textContent = '';
+
+    // Level title
+    levelTitle.textContent = `Level ${currentLevel}`;
+
+    // Default and disable controls per level:
+    if (lvlIndex === 0) {
+        // Level 1: distance fixed to -1
+        forceIn.disabled = false;
+        radiusIn.disabled = true;
+        forceIn.value = 10;        // or any default
+        radiusIn.value = -1;
+        radiusVal.textContent = '-1';
+    } else if (lvlIndex === 1) {
+        // Level 2: force fixed to 5
+        forceIn.disabled = true;
+        radiusIn.disabled = false;
+        forceIn.value = 5;
+        radiusIn.value = 1;         // or default
+        radiusVal.textContent = '1';
+    } else {
+        // Level 3+: all free again
+        forceIn.disabled = false;
+        radiusIn.disabled = true;
+        forceIn.value = 10;
+        radiusIn.value = -5;
+        radiusVal.textContent = '-5';
+    }
 
     draw();
 }
+
+// Called on each Add Weight
+function addManualWeightAndCheck() {
+    // Read the user‐editable controls; if disabled, these values come from nextLevel()
+    const F = Math.max(0, parseFloat(forceIn.value) || 0);
+    const r = parseFloat(radiusIn.value) || 0;
+    weights.push({ img: null, F, r });
+    checkAfterAdd();
+}
+
+// … rest of your code (checkAfterAdd(), draw(), update(), restartLevel()) unchanged …
+
 
 // --- Called immediately after each addWeight ---
 function checkAfterAdd() {
