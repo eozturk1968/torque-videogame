@@ -30,8 +30,8 @@ const levelSeeds = [
         { img: cherryImg, F: 10, r: -1 },
         { img: pearImg, F: 25, r: -4 },
         { img: appleImg, F: 20, r: 5 }
-        
-        
+
+
     ],
     [ // Level 3
         { img: cherryImg, F: 10, r: -4 },
@@ -127,7 +127,7 @@ function checkAfterAdd() {
 
     if (isBalanced(leftT, rightT)) {
         statusP.textContent = 'Congratulations!!!';
-       setTimeout(nextLevel, 0);
+        setTimeout(nextLevel, 0);
     } else if (!attempted) {
         attempted = true;
         restartLevel('Wrong answer! Try again.');
