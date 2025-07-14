@@ -80,6 +80,7 @@ function nextLevel() {
     // Default and disable controls per level:
     if (lvlIndex === 0) {
         // Level 1: distance fixed to -1
+        statusP.textContent = 'Enter the force required to balance the seesaw at the specified distance';
         forceIn.disabled = false;
         radiusIn.disabled = true;
         forceIn.value = "";        // or any default
@@ -87,6 +88,7 @@ function nextLevel() {
         radiusVal.textContent = '-1';
     } else if (lvlIndex === 1) {
         // Level 2: force fixed to 5
+        statusP.textContent = 'Enter the distance required to balance the seesaw at the specified force';
         forceIn.disabled = true;
         radiusIn.disabled = false;
         forceIn.value = 5;
@@ -94,6 +96,7 @@ function nextLevel() {
         radiusVal.textContent = '1';
     } else {
         // Level 3+: all free again
+        statusP.textContent = 'Enter the force required to balance the seesaw at the specified distance';
         forceIn.disabled = false;
         radiusIn.disabled = true;
         forceIn.value = "";
@@ -138,7 +141,11 @@ function checkAfterAdd() {
 
 // --- Restart the same level with message ---
 function restartLevel(message) {
-    currentLevel--;       // step back so nextLevel() re-seeds same
+
+
+
+    currentLevel--;
+    statusP.textContent = 'Enter the force required to balance the seesaw at the specified distance';
     nextLevel();
     statusP.textContent = message;
 }
