@@ -16,7 +16,7 @@ const forceIn = document.getElementById('force');
 const radiusIn = document.getElementById('radius');
 const radiusVal = document.getElementById('radiusVal');
 const addBtn = document.getElementById('addWeight');
-const resetBtn = document.getElementById('resetGame');
+//const resetBtn = document.getElementById('resetGame');
 const statusP = document.getElementById('status');
 const levelTitle = document.getElementById('level-title');
 
@@ -54,7 +54,7 @@ window.onload = () => {
     radiusIn.oninput = () => radiusVal.textContent = radiusIn.value;
 
     addBtn.onclick = () => { addManualWeightAndCheck(); };
-    resetBtn.onclick = () => { restartLevel(''); };
+   // resetBtn.onclick = () => { restartLevel(''); };
 
     nextLevel();
 };
