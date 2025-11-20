@@ -10,7 +10,7 @@ const cherryImg = new Image(); cherryImg.src = 'images/cherry.png';
 const pearImg = new Image(); pearImg.src = 'images/pear.png';
 
 // --- DOM refs ---
-const canvas = document.getElementById('gameCanvas');
+const canvas = document.getElementById('gameCanvas');    
 const ctx = canvas.getContext('2d');
 const forceIn = document.getElementById('force');
 const radiusIn = document.getElementById('radius');
